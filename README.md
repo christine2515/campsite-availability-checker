@@ -1,2 +1,2 @@
 # campsite-availability-checker
-Snag an awesome camping site last minute!
+Snag an awesome campsite last minute!
