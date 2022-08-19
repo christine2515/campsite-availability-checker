@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Corben:wght@400;700&family=Montserrat&display=swap');
+
+/* @font-face {
+  font-family: "Corben";
+  src: url("/assets/Corben/Corben-Bold.ttf")
+} */
+
+:root {
+  --forest-green: #013A20;
+  --sage: #B1D8B7;
+  --dark-sage: #A1AFA0;
+  --beige: #F7EDD0;
+  --earth: #947360;
+  --red: #970C10;
+}
+
+html {
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  padding: 40px 110px;
+}
+
+body {
+  background-color: var(--forest-green);
+  color: var(--beige);
+  font-family: 'Corben';
+  width: 100%;
+
+  h1 {
+    font-weight: 700;
+    font-size: 30px;
+    margin: 0;
+  }
+
+  h2: {
+    font-weight: 400;
+    font-size: 50px;
+    margin: 0;
+  }
+
+  p {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+}
+
+button {
+  font-family: 'Corben';
+  font-size: '25px';
+  color: var(--sage);
+  opacity: .5;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--red);
+  }
+}
+
+.nav-bar {
+  font-size: 50px;
+  color: var(--beige);
+
+  .title {
+    display: inline;
+  }
+
+  .nav-link {
+    border: none;
+    text-decoration: none;
+    color: var(--beige);
+  }
+
+  .nav-bar-right {
+    font-size: 20px;
+    float: right;
+    display: flex;
+    margin-top: 45px;
+    a { 
+      margin-left: 50px;
+    }
+  }
+
+  .is-active {
+    text-decoration: underline;
+  }
+}
+
+a {
+
+  &:link {
+    text-decoration: none; 
+    color: var(--beige);
+  }
+
+  &:visited {
+    text-decoration: none; 
+    color: var(--beige);
+  }
+
+  &:hover {
+    text-decoration: none; 
+    color: var(--dark-sage);
+  }
+
+  &:active {
+    text-decoration: none; 
+    color: var(--beige);
+  }
+
+}
+
+
+

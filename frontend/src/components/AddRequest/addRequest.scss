@@ -1,0 +1,37 @@
+@import '../../App.scss';
+
+.Button {
+    font-weight: 400;
+    line-height: 2;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-family: 'Corben';
+    color: var(--sage);
+    border: var(--earth);
+    z-index: 1000
+}
+
+.MuiButton-outlinedPrimary {
+    background-color: var(--beige);
+    border: var(--sage);
+}
+
+.MuiButton-label {
+    color: var(--earth);
+    border: var(--red);
+}
+
+.MuiButtonBase-root {
+    background-color: var(--beige);
+}
+
+.MuiButton-root {
+    background-color: var(--beige);
+}
+
+.MuiOutlinedInput-root {
+    background-color: var(--beige);
+    border-radius: 5px;
+    width: 500px;
+    margin-bottom: 10px;
+}
