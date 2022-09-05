@@ -1,5 +1,5 @@
 import './App.scss';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import MainPage from './pages/MainPage/mainPage.js';
 import AccountPage from './pages/AccountPage/accountPage.js';
@@ -7,15 +7,6 @@ import About from './pages/About/about.js';
 import Footer from './components/Footer/footer.js';
 
 function App() {
-
-  useEffect(() => {
-    fetch('/AccountPage').then(response => 
-      response.json().then(data => {
-      console.log(data);
-      })
-    );
-
-  }, []);
 
   return (
     <BrowserRouter>

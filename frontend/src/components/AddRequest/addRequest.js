@@ -13,20 +13,40 @@ function AddRequest() {
   const [equipment, setEquipment] = useState([]);
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
+  const [message, setMessage] = useState("");
 
-  const handleClickSave = () => {
-    // do something to save it
-    setPark('');
-    setStart('');
-    setEquipment('');
-    setEmail('');
-    setPwd('');
-  }
+  const handleClickSave = async () => {
+    const sendRequest = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Accept': '/*/',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive'
+      },
+      body: JSON.stringify({
+        park: park,
+        start: start,
+        equipment: [equipment],
+        email: email,
+        password: pwd,
+      }),
+    };
 
-  const handleDate = (date) => {
-    this.setState({
-      selectedDate: date,
-    });
+    alert(sendRequest.body);
+
+    const response = await fetch('http://localhost:5000/accounts', sendRequest);
+    alert(response.status);
+    if (response === "1") {
+      setPark('');
+      setStart('');
+      setEquipment('');
+      setEmail('');
+      setPwd('');
+      setMessage("Request created successfully.");
+    } else {
+      setMessage(response.statusText);
+    }
   }
 
 
@@ -38,6 +58,7 @@ function AddRequest() {
             <InputLabel>Find a Park!</InputLabel>
             <OutlinedInput 
               id="park"
+              name="park"
               value={park}
               onChange={(e) => setPark(e.target.value)}
               label="Find a Park"
@@ -50,23 +71,13 @@ function AddRequest() {
             <InputLabel>Select your start date (MM-DD-YYYY)</InputLabel>
             <OutlinedInput 
               id="start"
+              name="start"
               value={start}
               onChange={(e) => setStart(e.target.value)}
               label="Select start date"
               required
             />
           </FormControl>
-          {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-              label="Select your start date"
-              value={start}
-              // onChange={(newValue) => {
-              //   setStart(newValue);
-              // }}
-              onChange={setStart}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider> */}
           {/* <DatePicker
             name="startDate"
             selected={date}
@@ -83,6 +94,7 @@ function AddRequest() {
             <InputLabel>Select your equipment</InputLabel>
             <OutlinedInput 
               id="equipment"
+              nae="equipment"
               value={equipment}
               onChange={(e) => setEquipment(e.target.value)}
               label="Select your equipment"
@@ -95,6 +107,7 @@ function AddRequest() {
             <InputLabel>Input your email</InputLabel>
             <OutlinedInput 
               id="email"
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               label="Input your email"
@@ -107,6 +120,7 @@ function AddRequest() {
             <InputLabel>Input a password</InputLabel>
             <OutlinedInput 
               id="password"
+              name="password"
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
               label="Input a password"
@@ -117,6 +131,7 @@ function AddRequest() {
         <Button onClick={handleClickSave}> 
           Submit Request
         </Button>
+        <div className="message">{message ? <p>{message}</p> : null}</div>
     </div>
   );
   }
