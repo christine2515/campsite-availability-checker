@@ -12,6 +12,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 
 const uri = "mongodb+srv://christine2515:wiggle869@campsitecheckerdb.7pzsn6c.mongodb.net/campsitecheckerdb?retryWrites=true&w=majority";
@@ -23,12 +24,21 @@ const accountSchema = {
     park: String,
     start: String,
     // maybe later start will be a datetime
-    equipment: String,
+    equipment: Array,
     email: String,
     password: String
 };
 
 const Account = mongoose.model("Account", accountSchema, 'accounts');
+
+// ____________ TEST ____________
+
+app.route("/")
+.get(function(req, res, next) {
+    console.log("API is working properly");
+});
+
+// ____________ REQUESTS FOR ALL ACCOUNTS ____________
 
 app.route("/accounts")
 .get(function(req, res) {
@@ -42,12 +52,14 @@ app.route("/accounts")
     });
 })
 .post(function(req, res) {
-    console.log(req.body.park);
-    console.log(req.body.start);
+    // console.log(req.body.park);
+    // console.log(req.body.start);
+
+    // const { park, start, equipment, email, password } = req.body;
 
     const newAccount = new Account({
         park: req.body.park,
-        start:req.body.start,
+        start: req.body.start,
         equipment: req.body.equipment,
         email: req.body.email,
         password: req.body.password
@@ -55,22 +67,70 @@ app.route("/accounts")
 
     newAccount.save(function(err) {
         if (!err) {
-            res.send("Successfully added a new request.");
+            console.log("Successfully added a new request.");
         } else {
-            res.send(err);
+            console.log(err);
         }
     });
-})
-.delete(function(req, res) {
-    Account.deleteMany(function(err) {
-        if (!err) {
-            res.send("Successfully deleted all accounts.");
+});
+// .delete(function(req, res) {
+//     Account.deleteMany(function(err) {
+//         if (!err) {
+//             res.send("Successfully deleted all accounts.");
+//         } else {
+//             res.send(err);
+//         }
+//     });
+// })
+
+// ____________ REQUESTS FOR SPECIFIC ACCOUNTS ____________
+
+// FIND REQUESTS BY ACCOUNT EMAIL AND PWD
+app.route("/accounts/:inputEmail/:inputPwd")
+.get(function(req, res) {
+    Account.find({email: req.params.inputEmail, password: req.params.inputPwd}, function(err, foundAccount) {
+        if(foundAccount) {
+            res.send(foundAccount);
         } else {
-            res.send(err);
+            res.send("No requests associated with that email was found :(");
         }
     });
 });
 
-app.listen(3000, function() {
-  console.log("Server started on port 3000");
+// UPDATE A REQUEST
+app.route("/accounts/:id")
+.patch(function(req, res) {
+    Account.findByIdAndUpdate(
+        req.params.id,
+        {
+            park: req.body.park,
+            start: req.body.start,
+            equipment: req.body.equipment,
+        },
+        function(err) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send("Your request has been updated.");
+            }
+        }
+    )
+})
+
+// DELETE A REQUEST
+.delete(function(req, res) {
+    Account.findByIdAndDelete(
+        req.params.id,
+        function(err) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send("Your request has been deleted.")
+            }
+        }
+    )
+});
+
+app.listen(5000, function() {
+  console.log("Server started on port 5000");
 });
