@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-const uri = "mongodb+srv://christine2515:wiggle869@campsitecheckerdb.7pzsn6c.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://christine2515:wiggle869@campsitecheckerdb.7pzsn6c.mongodb.net/campsitecheckerdb?retryWrites=true&w=majority";
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 // connection works ^
