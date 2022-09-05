@@ -30,27 +30,8 @@ const accountSchema = {
 
 const Account = mongoose.model("Account", accountSchema, 'accounts');
 
-// var a1 = new Account({
-//     park: "plaskett",
-//     start: "never",
-//     equipment: "nothing",
-//     email: "hmm",
-//     password: "idk"
-// });
-
-// a1.save(function(err, account) {
-//     console.log("saved");
-// });
-
-// Account.count({}, function(err, count) {
-//     console.log("number of accounts:", count);
-// });
-
-// var Account = mongoose.model("accounts", accountSchema, "accounts");
-
-// get
-// left conditions out for now, later add in email and pwd
-app.get("/accounts", function(req, res) {
+app.route("/accounts")
+.get(function(req, res) {
     Account.find({}, function(err, foundAccounts) {
         if(!err) {
             res.send(foundAccounts);
@@ -58,6 +39,35 @@ app.get("/accounts", function(req, res) {
             res.send(err);
         }
         
+    });
+})
+.post(function(req, res) {
+    console.log(req.body.park);
+    console.log(req.body.start);
+
+    const newAccount = new Account({
+        park: req.body.park,
+        start:req.body.start,
+        equipment: req.body.equipment,
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    newAccount.save(function(err) {
+        if (!err) {
+            res.send("Successfully added a new request.");
+        } else {
+            res.send(err);
+        }
+    });
+})
+.delete(function(req, res) {
+    Account.deleteMany(function(err) {
+        if (!err) {
+            res.send("Successfully deleted all accounts.");
+        } else {
+            res.send(err);
+        }
     });
 });
 
