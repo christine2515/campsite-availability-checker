@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import './addRequest.scss';
-import { TextField, Button, OutlinedInput, InputLabel, Box, FormControl } from '@material-ui/core';
+import { TextField, Button, OutlinedInput, InputLabel, Box, FormControl, styled } from '@material-ui/core';
 import DatePicker from '@material-ui/pickers';
 import AdapterDateFns from '@date-io/date-fns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -23,6 +23,12 @@ function AddRequest() {
     setPwd('');
   }
 
+  const handleDate = (date) => {
+    this.setState({
+      selectedDate: date,
+    });
+  }
+
 
   return (
     <div className="container">
@@ -41,7 +47,7 @@ function AddRequest() {
         </Box>
         <Box>
           <FormControl variant="filled">
-            <InputLabel>Select your start date (YYYY-MM-DD)</InputLabel>
+            <InputLabel>Select your start date (MM-DD-YYYY)</InputLabel>
             <OutlinedInput 
               id="start"
               value={start}
@@ -61,6 +67,16 @@ function AddRequest() {
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider> */}
+          {/* <DatePicker
+            name="startDate"
+            selected={date}
+            onChange={this.handleDate(date)}
+            minDate={new Date()}
+            timeIntervals={15}
+            dateFormmat="mm/dd/yyyy"
+            autoComplete="off"
+            className={styled.datePicker}
+          /> */}
         </Box>
         <Box>
           <FormControl variant="filled">
