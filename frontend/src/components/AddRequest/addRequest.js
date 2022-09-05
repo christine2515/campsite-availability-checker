@@ -15,38 +15,28 @@ function AddRequest() {
   const [pwd, setPwd] = useState('');
   const [message, setMessage] = useState("");
 
-  const handleClickSave = async () => {
-    const sendRequest = {
+  const handleClickSave = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("park", park);
+    urlencoded.append("start", start);
+    urlencoded.append("equipment", equipment);
+    urlencoded.append("email", email);
+    urlencoded.append("password", pwd);
+
+    var requestOptions = {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Accept': '/*/',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive'
-      },
-      body: JSON.stringify({
-        park: park,
-        start: start,
-        equipment: [equipment],
-        email: email,
-        password: pwd,
-      }),
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: 'follow'
     };
 
-    alert(sendRequest.body);
-
-    const response = await fetch('http://localhost:5000/accounts', sendRequest);
-    alert(response.status);
-    if (response === "1") {
-      setPark('');
-      setStart('');
-      setEquipment('');
-      setEmail('');
-      setPwd('');
-      setMessage("Request created successfully.");
-    } else {
-      setMessage(response.statusText);
-    }
+    fetch("http://localhost:5000/accounts", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
   }
 
 

@@ -6,15 +6,30 @@ import './accountPage.scss';
 function AccountPage() {
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
-  // const account = useSelector((state) => state? || {}) 
-  // FIGURE THIS OUT ^
-  const account = useState('');
-  const [accountDetails, setAccountDetails] = useState(account);
+
+  // const account = useState('');
+  // const [accountReqs, setAccountReqs] = useState([]);
+  // see postman display - a list of dicts
 
   const handleClickSave = () => {
-    console.log(accountDetails);
-    setEmail('');
-    setPwd('');
+    // var urlencoded = new URLSearchParams();
+
+    var requestOptions = {
+      mode: 'no-cors',
+      method: 'GET',
+      // body: urlencoded,
+      redirect: 'follow'
+    };
+
+    const url = "http://localhost:5000/accounts?email=" + email + "&password=" + pwd;
+
+    fetch(url, requestOptions)
+      .then(response => response.text())
+      // ^ promise
+      .then(result => console.log(result))
+      // ^ "output"...currently undefined :(
+      .catch(error => console.log('error', error));
+
   }
 
   return (
