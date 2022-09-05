@@ -4,6 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require('mongoose');
+// const cors = require("cors");
+// app.use(cors());
 
 const app = express();
 
@@ -86,9 +88,9 @@ app.route("/accounts")
 // ____________ REQUESTS FOR SPECIFIC ACCOUNTS ____________
 
 // FIND REQUESTS BY ACCOUNT EMAIL AND PWD
-app.route("/accounts/:inputEmail/:inputPwd")
+app.route("/accounts/:email/:password")
 .get(function(req, res) {
-    Account.find({email: req.params.inputEmail, password: req.params.inputPwd}, function(err, foundAccount) {
+    Account.find({email: req.params.email, password: req.params.password}, function(err, foundAccount) {
         if(foundAccount) {
             res.send(foundAccount);
         } else {
